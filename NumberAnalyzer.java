@@ -1,5 +1,5 @@
 package com.ecld.java.assesment;
-
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class NumberAnalyzer {
@@ -26,29 +26,19 @@ public class NumberAnalyzer {
     public static void main(String[] args) {
         System.out.println("Number Analyzer");
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter number 1: ");
-        int num = scanner.nextInt();
-        System.out.printf("Number %d is:\n", num);
-        analyzeNumber(num);
+        for (int i = 1; i <= 5; i++) {
 
-        System.out.print("Enter number 2: ");
-        num = scanner.nextInt();
-        System.out.printf("Number %d is:\n", num);
-        analyzeNumber(num);
+            try {
+                System.out.printf("Enter number %d: ", i);
+                int num = scanner.nextInt();
+                System.out.printf("Number %d is:\n", num);
+                analyzeNumber(num);
 
-        System.out.print("Enter number 3: ");
-        num = scanner.nextInt();
-        System.out.printf("Number %d is:\n", num);
-        analyzeNumber(num);
-
-        System.out.print("Enter number 4: ");
-        num = scanner.nextInt();
-        System.out.printf("Number %d is:\n", num);
-        analyzeNumber(num);
-
-        System.out.print("Enter number 5: ");
-        num = scanner.nextInt();
-        System.out.printf("Number %d is:\n", num);
-        analyzeNumber(num);
+            } catch (InputMismatchException e) {
+                System.out.println("Please enter a valid number");
+                scanner.next();
+            }
+        }
+        scanner.close();
     }
 }
