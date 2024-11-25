@@ -16,6 +16,10 @@ public class Calculator {
     }
 
     public static double divide(double a, double b) {
+        if(b==0)
+        {
+            throw new ArithmeticException("Cannot divide by zero");
+        }
         return a / b;
     }
 
@@ -27,18 +31,29 @@ public class Calculator {
         double num2 = scanner.nextDouble();
         System.out.println("Choose operation: \n1. Add (+) \n2. Subtract (-) \n3. Multiply (*) \n4. Divide (/)");
         System.out.print("Enter choice: ");
-        double choice = scanner.nextDouble();
-        if (choice == 1) {
-            System.out.println(add(num1, num2));
-        } else if (choice == 2) {
-            System.out.println(subtract(num1, num2));
-        } else if (choice == 3) {
-            System.out.println(multiply(num1, num2));
-        } else if (choice == 4) {
-            System.out.println(divide(num1, num2));
-        } else {
-            System.out.println("invalid");
+        int choice = scanner.nextInt();
+        switch(choice)
+        {
+            case 1:
+                System.out.printf("%.2f + %.2f = %.2f%n",
+                        num1, num2, add(num1, num2));
+                break;
+            case 2:
+                System.out.printf("%.2f - %.2f = %.2f%n",
+                        num1, num2, subtract(num1, num2));
+                break;
+            case 3:
+                System.out.printf("%.2f * %.2f = %.2f%n",
+                        num1, num2, multiply(num1, num2));
+                break;
+            case 4:
+                System.out.printf("%.2f / %.2f = %.2f%n",
+                        num1, num2, divide(num1, num2));
+                break;
+            default:
+                System.out.println("invalid option");
+                break;
         }
-
+        scanner.close();
     }
 }
