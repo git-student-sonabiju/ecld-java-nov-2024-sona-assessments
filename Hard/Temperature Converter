@@ -1,0 +1,24 @@
+package com.ecld.java.hard;
+
+public class TempConverter {
+    public static void main(String[] args) {
+        System.out.println(convert("35*C"));
+        System.out.println(convert("19*F"));
+        System.out.println(convert("33"));
+    }
+
+    public static String convert(String deg) {
+        int idx = deg.indexOf('*');
+
+        if (deg.charAt(deg.length() - 1) == 'C') {
+            int cel = Integer.parseInt(deg.substring(0, idx));
+            int fah = (int) Math.round(cel * 1.8 + 32);
+            return Integer.toString(fah) + "*F";
+        } else if (deg.charAt(deg.length() - 1) == 'F') {
+            int fah = Integer.parseInt(deg.substring(0, idx));
+            int cel = (int) Math.round((fah - 32) / 1.8);
+            return Integer.toString(cel) + "*C";
+        } else
+            return "Error";
+    }
+}
