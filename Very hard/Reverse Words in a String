@@ -23,8 +23,6 @@ public class RevString {
         for (int i = words.length - 1; i >= 0; i--) {
             reversedString += words[i] + " ";
         }
-
-        // Remove the trailing space and return the result
         return reversedString;
     }
 }
