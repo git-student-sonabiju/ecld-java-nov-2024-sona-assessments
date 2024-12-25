@@ -1,59 +1,64 @@
-package com.ecld.java.assessment3;
-
+package com.ecld.java.assess;
 import java.util.Iterator;
+import java.util.Scanner;
 
-public class Main {
-    public static void main(String[] args) {
-        //create tracks
-        Track track1 = new Track(1L, "FirstSong", 4, false);
-        Track track2 = new Track(2L, "SecondSong", 5, true);
-        Track track3 = new Track(3L, "ThirdSong", 3, false);
-        Track track4 = new Track(4L, "FourthSong", 4, true);
-        Track track5 = new Track(5L, "FifthSong", 3, false);
+    public class Main {
+        public static void main(String[] args) {
+            SmartPlaylist userPlaylist = new SmartPlaylist(PlaylistType.USER_CREATED);
 
-        SmartPlayList playList = new SmartPlayList();
+            // Pre-defined Tracks
+            Track track1 = new Track(1L, "Hello", false);
+            Track track2 = new Track(2L, "Mood", true);
+            Track track3 = new Track(3L, "Goodbyes", false);
 
-        playList.addTrack(track1);
-        playList.addTrack(track2);
-        playList.addTrack(track3);
-        playList.addTrack(track4);
-        playList.addTrack(track5);
+            // Adding Tracks
+            userPlaylist.addTrack(track1);
+            userPlaylist.addTrack(track2);
+            userPlaylist.addTrack(track3);
 
-        System.out.println("Current Queue:");
-        for (Track track : playList.currentQueue) {
-            System.out.println(track.getTitle());
-        }
+            // Adding via User Input
+            Scanner sc = new Scanner(System.in);
+            System.out.print("Enter the track name to be added: ");
+            String trackName = sc.nextLine();
+            System.out.print("Enter the track ID for the above track: ");
+            Long trackId = Long.parseLong(sc.nextLine());
+            System.out.print("Enter the Premium status (true/false): ");
+            boolean isPremium = Boolean.parseBoolean(sc.nextLine());
+            Track userTrack = new Track(trackId, trackName, isPremium);
+            userPlaylist.addTrack(userTrack);
 
-        System.out.println("\nShuffled Queue:");//shuffled queue
-        Iterator<Track> shuffleIterator = playList.shuffleIterator();
-        while (shuffleIterator.hasNext()) {
-            System.out.println(shuffleIterator.next().getTitle());
-        }
+            // Display Current Queue
+            System.out.println("\nCurrent Queue:");
+            for (Track track : userPlaylist.getCurrentQueue()) {
+                System.out.println(track.getTitle() + " (Premium: " + track.isPremium() + ")");
+            }
 
-        playList.updateRating(1L, 2); //update rating
-        System.out.println("\nUpdated Rating for 'Song One': " + track1.getRating());
-        System.out.println("Queue after update rating:");
-        for (Track track : playList.currentQueue) {
-            System.out.println(track.getRating());
-        }
+            // Update Ratings
+            userPlaylist.updateRating(1L, 4);
+            userPlaylist.updateRating(2L, 5);
 
-        playList.removeTrack(2L); //remove track
-        System.out.println("\nQueue after removing 'Song Two':");
-        for (Track track : playList.currentQueue) {
-            System.out.println(track.getTitle());
-        }
+            System.out.println("\nQueue after Rating Updates:");
+            for (Track track : userPlaylist.getCurrentQueue()) {
+                System.out.println(track.getTitle() + " - Rating: " + track.getRating());
+            }
 
-        playList.moveTrack(0, 2); //move track
-        System.out.println("\nQueue after moving track:");
-        for (Track track : playList.currentQueue) {
-            System.out.println(track.getTitle());
-        }
+            // Shuffle
+            System.out.println("\nShuffle Queue:");
+            Iterator<Track> shuffleIterator = userPlaylist.shuffleIterator();
+            while (shuffleIterator.hasNext()) {
+                Track track = shuffleIterator.next();
+                System.out.println(track.getTitle());
+            }
 
-        Track track6 = new Track(5L, "SixthSong", 4, true); //add premium
-        playList.addPriority(track6);
-        System.out.println("\nQueue after adding a premium track with priority:");
-        for (Track track : playList.currentQueue) {
-            System.out.println(track.getTitle());
+            // Remove a Track
+            System.out.println("\nRemoving Track with ID 1...");
+            userPlaylist.removeTrack(1L);
+
+            System.out.println("\nQueue after Removal:");
+            for (Track track : userPlaylist.getCurrentQueue()) {
+                System.out.println(track.getTitle());
+            }
+
+            sc.close();
         }
     }
-}
