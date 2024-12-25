@@ -1,56 +1,37 @@
-package com.ecld.java.assessment3;
-
+package com.ecld.java.assess;
 public class Track {
-    private Long trackId;
-    private String title;
+    private final Long trackId;
+    private final String title;
     private int rating;
-    private boolean isPremium;
+    private final boolean isPremium;
 
-    public Track(Long trackId, String title, int rating, boolean isPremium) //constructor
-    {
+    public Track(Long trackId, String title, boolean isPremium) {
         this.trackId = trackId;
         this.title = title;
-        this.rating = rating;
         this.isPremium = isPremium;
     }
 
-    public Long getTrackId()  //getter for trackId
-    {
+    public Long getTrackId() {
         return trackId;
     }
 
-    public void setTrackId(Long trackId) //setter for trackId
-    {
-        this.trackId = trackId;
-    }
-
-    public String getTitle()  //getter for title
-    {
+    public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) //setter for title
-    {
-        this.title = title;
-    }
-
-    public int getRating()  //getter for rating
-    {
-        return rating;
-    }
-
-    public void setRating(int rating)  //setter for rating
-    {
-        this.rating = rating;
-    }
-
-    public boolean isPremium() //getter for isPremium
-    {
+    public boolean isPremium() {
         return isPremium;
     }
 
-    public void setPremium(boolean isPremium) //setter for isPremium
-    {
-        this.isPremium = isPremium;
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        if (rating >= 1 && rating <= 5) {
+            this.rating = rating;
+        } else {
+            throw new IllegalArgumentException("Rating must be between 1 and 5");
+        }
     }
 }
